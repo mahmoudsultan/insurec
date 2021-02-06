@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { ListingDao } from './dao/listing.dao';
 import { CreateListingDto } from './dto/create-listing.dto';
+import { UpdateListingDto } from './dto/update-listing.dto';
 
 @Injectable()
 export class ListingsService {
@@ -18,7 +19,15 @@ export class ListingsService {
     return this.listingDao.listingById(id);
   }
 
-  create(listingAttributes: CreateListingDto) {
+  create(listingAttributes: CreateListingDto): Promise<Listing> {
     return this.listingDao.create(listingAttributes);
+  }
+
+  update(id: number, attribures: UpdateListingDto): Promise<Listing> {
+    return this.listingDao.update(id, attribures);
+  }
+
+  delete(id: number): Promise<Listing> {
+    return this.listingDao.delete(id);
   }
 }
