@@ -9,8 +9,17 @@ import { UpdateListingDto } from '../dto/update-listing.dto';
 export class ListingDao {
   constructor(private readonly prisma: PrismaService) {}
 
-  listings(page, limit) {
-    return this.prisma.listing.findMany({ take: limit, skip: (page || 1) * limit });
+  listings(page?: number, limit?: number): Promise<Listing[]> {
+    let config = {}
+    if (page) {
+      if (!limit) {
+        throw new Error('LIMIT MUST BE PROVIDED IF PAGE IS');
+      }
+
+      config = { ...config, take: limit, skip: (page || 1) * limit };
+    }
+
+    return this.prisma.listing.findMany(config);
   }
 
   listingById(id: number): Promise<Listing> {

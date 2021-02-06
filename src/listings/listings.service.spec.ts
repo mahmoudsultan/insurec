@@ -42,26 +42,6 @@ describe('ListingsService', () => {
 
       expect(listingDao.listings).toHaveBeenCalledWith(mockPage, mockLimit);
     });
-
-    it('calls listingDao with page = 0 and default limit if non passed', async () => {
-      const defaultLimit = configService.get<number>('DEFAULT_PAGE_SIZE');
-      const mockListings = mockListingFactory.getMany(10);
-      jest.spyOn(listingDao, 'listings').mockResolvedValueOnce(mockListings);
-
-      await service.listings();
-
-      expect(listingDao.listings).toHaveBeenCalledWith(0, defaultLimit);
-    });
-
-    it('calls listingDao with passed page and MAX_PAGE_SIZE if passed limit exceeds MAX_PAGE_SIZE', async () => {
-      const maxLimit = configService.get<number>('MAX_PAGE_SIZE');
-      const mockListings = mockListingFactory.getMany(10);
-      jest.spyOn(listingDao, 'listings').mockResolvedValueOnce(mockListings);
-
-      await service.listings(0, maxLimit + 1);
-
-      expect(listingDao.listings).toHaveBeenCalledWith(0, maxLimit);
-    });
   });
 
   describe('.listingById', () => {

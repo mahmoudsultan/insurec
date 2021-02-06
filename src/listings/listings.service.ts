@@ -10,14 +10,7 @@ export class ListingsService {
   constructor(private readonly listingDao: ListingDao,
               private readonly configService: ConfigService) {}
 
-  listings(
-    page: number = 0,
-    limit: number = this.configService.get<number>('DEFAULT_PAGE_SIZE')
-  ): Promise<Listing[]> {
-    limit = limit > this.configService.get<number>('MAX_PAGE_SIZE') ? 
-              this.configService.get<number>('MAX_PAGE_SIZE') :
-              limit;
-
+  listings(page?: number, limit?: number): Promise<Listing[]> {
     return this.listingDao.listings(page, limit);
   }
 
