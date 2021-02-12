@@ -5,9 +5,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ListingsModule } from './listings/listings.module';
+import { ListingRecommendationsModule } from './listing-recommendations/listing-recommendations.module';
 
 @Module({
-  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot()],
+  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(), ListingRecommendationsModule],
   controllers: [AppController],
   providers: [AppService],
 })
