@@ -38,4 +38,8 @@ export class ListingRecommendationsService {
 
     return this.listingRecommendationDao.create(listingRecommendationCreateInput);
   }
+
+  delete(listingRecommendationId: number): Promise<ListingRecommendation> {
+    return this.listingRecommendationDao.delete(listingRecommendationId);
+  }
 }
