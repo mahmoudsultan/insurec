@@ -6,9 +6,10 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ListingsModule } from './listings/listings.module';
 import { ListingRecommendationsModule } from './listing-recommendations/listing-recommendations.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(), ListingRecommendationsModule],
+  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(), ListingRecommendationsModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

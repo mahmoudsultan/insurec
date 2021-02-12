@@ -2,10 +2,12 @@ import { ListingRecommendation } from '@prisma/client';
 
 import * as _ from 'lodash';
 
+import { ListingRecommendationTraits } from '../dto/listing-recommendation-traits.dto';
+
 export interface ListingRecommendationView {
   readonly id: number;
-  readonly name: string;
-  readonly description?: string;
+  readonly traits: ListingRecommendationTraits[];
+  readonly listingId: number;
 }
 
 export class ListingRecommendationViewBlueprint {
@@ -20,6 +22,6 @@ export class ListingRecommendationViewBlueprint {
   }
 
   private static renderOne(listing: ListingRecommendation): ListingRecommendationView {
-    return _.pick(listing, ['id', 'name', 'description']);
+    return _.pick(listing, ['id', 'traits', 'listingId']);
   }
 }

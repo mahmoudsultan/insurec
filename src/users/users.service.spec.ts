@@ -1,0 +1,23 @@
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { PrismaModule } from '@src/prisma/prisma.module';
+
+import { UsersService } from './users.service';
+import { UserDao } from './dao/user.dao';
+
+describe('UsersService', () => {
+  let service: UsersService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [PrismaModule],
+      providers: [UsersService, UserDao],
+    }).compile();
+
+    service = module.get<UsersService>(UsersService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
