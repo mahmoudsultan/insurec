@@ -23,7 +23,7 @@ export class UserRepository {
     };
   }
 
-  getTraitsForUser(ques: Ques) {
+  private getTraitsForUser(ques: Ques) {
     if (!ques) {
       return [];
     }

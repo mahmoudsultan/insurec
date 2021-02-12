@@ -14,7 +14,7 @@ import { UserRepository } from './repository/user.repository';
   imports: [PrismaModule, ConfigModule, QuesModule],
   providers: [UsersService, UserDao, AuthMiddleware, UserRepository],
   controllers: [UsersController],
-  exports: [AuthMiddleware],
+  exports: [AuthMiddleware, UserRepository],
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

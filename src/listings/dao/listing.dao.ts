@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/prisma/prisma.service';
-import { Listing, Prisma } from '@prisma/client';
+import { Listing, Prisma, Trait } from '@prisma/client';
 
 import { CreateListingDto } from '../dto/create-listing.dto';
 import { UpdateListingDto } from '../dto/update-listing.dto';
+import { RecommendedListingDto } from '../dto/recommeded-listing.dto';
+import { recommendedListingsForTratisQuery } from '../queries/recommended-listing-for-traits.query';
 
 @Injectable()
 export class ListingDao {
@@ -20,6 +22,12 @@ export class ListingDao {
     }
 
     return this.prisma.listing.findMany(config);
+  }
+
+  async listingsForTraits(traits: Trait[]): Promise<RecommendedListingDto[]> {
+    const matchedListings = await this.prisma.$queryRaw(recommendedListingsForTratisQuery(traits));
+
+    return matchedListings
   }
 
   listingById(id: number): Promise<Listing> {

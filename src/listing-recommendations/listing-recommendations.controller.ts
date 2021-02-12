@@ -7,7 +7,7 @@ import { ListingRecommendationsService } from './listing-recommendations.service
 import { ListingRecommendationViewBlueprint, ListingRecommendationView } from './views/ListingRecommendation.view';
 import { CreateListingRecommendationDto } from './dto/create-listing-recommendation.dto';
 
-@Controller('listing-recommendations')
+@Controller('recommendations')
 export class ListingRecommendationsController {
   constructor(private readonly configService: ConfigService,
               private readonly listingRecommendationService: ListingRecommendationsService) {}
@@ -33,7 +33,7 @@ export class ListingRecommendationsController {
     return ListingRecommendationViewBlueprint.render(createdListingRecommendation);
   }
 
-  @Delete('/:id/')
+  @Delete('/:id')
   async delete(@Param('id') listingRecommmendationId: number): Promise<ListingRecommendationViewBlueprint> {
     const deletedListingRecommendation = await this.listingRecommendationService.delete(listingRecommmendationId);
 
