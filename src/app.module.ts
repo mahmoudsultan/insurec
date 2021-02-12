@@ -10,7 +10,8 @@ import { UsersModule } from './users/users.module';
 import { QuesModule } from './ques/ques.module';
 
 @Module({
-  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(), ListingRecommendationsModule, UsersModule, QuesModule],
+  imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(),
+            ListingRecommendationsModule, UsersModule, QuesModule],
   controllers: [AppController],
   providers: [AppService],
 })

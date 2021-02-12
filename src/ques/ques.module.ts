@@ -12,7 +12,8 @@ import { QuesController } from './ques.controller';
 @Module({
   imports: [PrismaModule, ConfigModule],
   providers: [QuesService, QuesDao],
-  controllers: [QuesController]
+  controllers: [QuesController],
+  exports: [QuesDao]
 })
 export class QuesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

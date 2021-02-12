@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 
 import * as _ from 'lodash';
+import { UserWithTraits } from '../dto/user-with-traits.dto';
 
 export interface UserView {
   readonly id: number;
@@ -16,6 +17,13 @@ export class UserViewBlueprint {
     }
 
     return this.renderOne(users) as UserView;
+  }
+
+  static renderWithTraits(user: UserWithTraits) {
+    return {
+      ...UserViewBlueprint.renderOne(user),
+      traits: user.traits || [],
+    }
   }
 
   private static renderOne(user: User): UserView {

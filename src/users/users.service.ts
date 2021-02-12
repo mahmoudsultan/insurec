@@ -8,13 +8,16 @@ import { omit } from 'lodash';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDao } from './dao/user.dao';
+import { UserRepository } from './repository/user.repository';
 
 import { generateJWT, verifyAndDecode } from './utils/jwt'
+import { UserWithTraits } from './dto/user-with-traits.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly configService: ConfigService,
-              private readonly userDao: UserDao) {}
+              private readonly userDao: UserDao,
+              private readonly userRepository: UserRepository) {}
 
   async signUp(user: CreateUserDto): Promise<User> {
     const saltRounds = Number.parseInt(this.configService.get<string>('BCRYPT_SALT_ROUNDS'));
@@ -47,5 +50,9 @@ export class UsersService {
     const userData = await verifyAndDecode<User>(token, this.configService.get<string>('JWT_SECRET'));
 
     return userData;
+  }
+
+  userWithTrais(userId: number): Promise<UserWithTraits> {
+    return this.userRepository.userWithTraits(userId);
   }
 }
