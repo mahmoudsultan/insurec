@@ -11,14 +11,10 @@ import { recommendedListingsForTratisQuery } from '../queries/recommended-listin
 export class ListingDao {
   constructor(private readonly prisma: PrismaService) {}
 
-  listings(page?: number, limit?: number): Promise<Listing[]> {
-    let config = {}
-    if (page) {
-      if (!limit) {
-        throw new Error('LIMIT MUST BE PROVIDED IF PAGE IS');
-      }
-
-      config = { ...config, take: limit, skip: (page || 1) * limit };
+  listings(startAfter?: number, limit?: number): Promise<Listing[]> {
+    let config: any = { take: limit, skip: startAfter ? 1 : 0 }
+    if (startAfter) {
+      config = { ...config, cursor: { id: startAfter } };
     }
 
     return this.prisma.listing.findMany(config);

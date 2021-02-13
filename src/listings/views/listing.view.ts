@@ -1,10 +1,16 @@
 import { Listing } from '@prisma/client';
 
 import * as _ from 'lodash';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-export interface ListingView {
+export class ListingView {
+  @ApiModelProperty({ example: 1 })
   readonly id: number;
+
+  @ApiModelProperty({ example: 'Health Insurance' })
   readonly name: string;
+
+  @ApiModelProperty({ example: 'More details about the listing' })
   readonly description?: string;
 }
 

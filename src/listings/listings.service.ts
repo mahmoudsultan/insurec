@@ -14,8 +14,8 @@ export class ListingsService {
               private readonly usersRepository: UserRepository,
               private readonly configService: ConfigService) {}
 
-  listings(page?: number, limit?: number): Promise<Listing[]> {
-    return this.listingDao.listings(page, limit);
+  listings(startAfter?: number, limit?: number): Promise<Listing[]> {
+    return this.listingDao.listings(startAfter, limit);
   }
 
   async listingsForTraits(userId: number) {
