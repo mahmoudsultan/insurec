@@ -82,11 +82,7 @@ describe('ListingRecommendationsService', () => {
 
       const expectedCreateInput = {
         traits: mockListingRecommendationAttr.traits,
-        listing: {
-          connect: {
-            where: { id: mockListingId },
-          },
-        },
+        listingId: mockListingId,
       }
 
       await service.create(mockListingRecommendationAttrWithId);
@@ -99,11 +95,7 @@ describe('ListingRecommendationsService', () => {
 
       const expectedCreateInput = {
         traits: mockListingRecommendationAttr.traits,
-        listing: {
-          connect: {
-            where: { id: mockListingId },
-          },
-        },
+        listingId: mockListingId,
       }
 
       await service.create(mockListingRecommendationAttr);

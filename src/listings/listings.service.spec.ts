@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { PrismaModule } from '@src/prisma/prisma.module';
+import { UsersModule } from '@src/users/users.module';
 
 import { ListingsService } from './listings.service';
 import { ListingDao } from './dao/listing.dao';
@@ -16,7 +17,7 @@ describe('ListingsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule, ConfigModule],
+      imports: [PrismaModule, ConfigModule, UsersModule],
       providers: [ListingsService, ListingDao],
     }).compile();
 

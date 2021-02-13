@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as _ from 'lodash';
 
 import { PrismaModule } from '@src/prisma/prisma.module';
+import { UsersModule } from '@src/users/users.module';
 
 import { ListingsController } from './listings.controller';
 import { ListingsService } from './listings.service';
@@ -18,7 +19,7 @@ describe('ListingsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule, ConfigModule],
+      imports: [PrismaModule, ConfigModule, UsersModule],
       providers: [ListingsService, ListingDao],
       controllers: [ListingsController],
     }).compile();
@@ -44,24 +45,24 @@ describe('ListingsController', () => {
       expect(results.length).toEqual(10);
     });
 
-    it('calls listingService with page = 0 and default limit if non passed', async () => {
-      const defaultLimit = configService.get<number>('DEFAULT_PAGE_SIZE');
+    it('calls listingService with startAfter = null and default limit if non passed', async () => {
+      const defaultLimit = configService.get<string>('DEFAULT_PAGE_SIZE');
       const mockListings = mockListingFactory.getMany(10);
       jest.spyOn(listingsService, 'listings').mockResolvedValueOnce(mockListings);
 
       await controller.listings({});
 
-      expect(listingsService.listings).toHaveBeenCalledWith(0, defaultLimit);
+      expect(listingsService.listings).toHaveBeenCalledWith(null, Number.parseInt(defaultLimit));
     });
 
     it('calls listingService with passed page and MAX_PAGE_SIZE if passed limit exceeds MAX_PAGE_SIZE', async () => {
-      const maxLimit = configService.get<number>('MAX_PAGE_SIZE');
+      const maxLimit = configService.get<string>('MAX_PAGE_SIZE');
       const mockListings = mockListingFactory.getMany(10);
       jest.spyOn(listingsService, 'listings').mockResolvedValueOnce(mockListings);
 
-      await controller.listings({ page: 0, limit: maxLimit + 1 });
+      await controller.listings({ startAfter: 0, limit: maxLimit + 1 });
 
-      expect(listingsService.listings).toHaveBeenCalledWith(0, maxLimit);
+      expect(listingsService.listings).toHaveBeenCalledWith(0, Number.parseInt(maxLimit));
     });
 
     it('returns only whitelisted fields', async () => {
@@ -70,8 +71,8 @@ describe('ListingsController', () => {
 
       jest.spyOn(listingsService, 'listings').mockResolvedValueOnce(mockListings);
 
-      const results = await controller.listings({ page: 1, limit: 10 });
-      const filteredResults = results.map((result) => _.pick(result, ['id', 'name', 'description']));
+      const results = await controller.listings({ startAfter: 1, limit: 10 });
+      const filteredResults = results.map((result) => _.pick(result, whiteListedFields));
 
       expect(results).toEqual(filteredResults);
     });
