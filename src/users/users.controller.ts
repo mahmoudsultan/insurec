@@ -1,10 +1,11 @@
 import { Controller, Post, Body, Get, Req, UnauthorizedException, Param, BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import { ApiImplicitQuery, ApiOkResponse, ApiBearerAuth, ApiModelProperty, ApiCreatedResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
+import { ApiOkResponse, ApiBearerAuth, ApiModelProperty, ApiCreatedResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { UserViewBlueprint, UserWithTraitsView, UserView } from './views/user.view';
 import { LoginDto } from './dto/login.dto';
+import { AuthRequest } from './middlewares/auth.middleware';
 
 class TokenResponse {
   @ApiModelProperty({ description: 'JWT Token', type: String })
@@ -24,8 +25,8 @@ export class UsersController {
   @Get('/:id/traits')
   @ApiImplicitParam({ name: 'id', description: 'ID of user to return list of traits for' })
   @ApiOkResponse({ type: UserWithTraitsView })
-  async userWithTrais(@Param('id') userId) {
-    userId = Number.parseInt(userId);
+  async userWithTrais(@Param('id') userId: string | number): Promise<UserWithTraitsView> {
+    userId = Number.parseInt(userId as string);
     const userWithTrais = await this.usersService.userWithTrais(userId);
 
     return UserViewBlueprint.renderWithTraits(userWithTrais);
@@ -34,14 +35,14 @@ export class UsersController {
   @Get('/profile')
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserView })
-  async userProfile(@Req() req) {
+  async userProfile(@Req() req: AuthRequest): Promise<UserView> {
     return UserViewBlueprint.render(req.user);
   }
 
   
   @Post('/login')
   @ApiOkResponse({ type: TokenResponse })
-  async login(@Body() { email, password }: LoginDto) {
+  async login(@Body() { email, password }: LoginDto): Promise<TokenResponse> {
     try {
       const token = await this.usersService.login(email, password);
       return {
@@ -54,7 +55,7 @@ export class UsersController {
 
   @Post()
   @ApiCreatedResponse({ type: UserWithToken })
-  async signup(@Body() bodyParams: CreateUserDto) {
+  async signup(@Body() bodyParams: CreateUserDto): Promise<UserWithToken> {
     let createdUser;
     try {
       createdUser = await this.usersService.signUp(bodyParams);

@@ -17,7 +17,7 @@ import { UserRepository } from './repository/user.repository';
   exports: [AuthMiddleware, UserRepository],
 })
 export class UsersModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AuthMiddleware).exclude(
       { path: '/users/:id/traits', method: RequestMethod.GET },
       { path: '/users', method: RequestMethod.POST },

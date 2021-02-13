@@ -18,16 +18,16 @@ export class ListingRecommendationsController {
   @ApiImplicitQuery({ name: 'startAfter', required: false })
   @ApiImplicitQuery({ name: 'limit', required: false })
   @ApiOkResponse({ type: [ListingRecommendationView] })
-  async listingRecommendations(@Query() query): Promise<ListingRecommendationView[]> {
+  async listingRecommendations(@Query() query: { startAfter?: unknown, limit: unknown }): Promise<ListingRecommendationView[]> {
     let { startAfter = null, limit = this.configService.get<number>('DEFAULT_PAGE_SIZE') } = query;
     limit = limit > this.configService.get<number>('MAX_PAGE_SIZE') ? 
               this.configService.get<number>('MAX_PAGE_SIZE') :
               limit;
 
-    startAfter = startAfter && Number.parseInt(startAfter);
-    limit = Number.parseInt(limit);
+    startAfter = startAfter && Number.parseInt(startAfter as string);
+    limit = Number.parseInt(limit as string);
 
-    const listingRecommendations = await this.listingRecommendationService.listingRecommendations(startAfter, limit);
+    const listingRecommendations = await this.listingRecommendationService.listingRecommendations(startAfter as number, limit as number);
 
     return ListingRecommendationViewBlueprint.render(listingRecommendations);
   }

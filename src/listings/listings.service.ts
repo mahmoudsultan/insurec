@@ -18,7 +18,7 @@ export class ListingsService {
     return this.listingDao.listings(startAfter, limit);
   }
 
-  async listingsForTraits(userId: number) {
+  async listingsForTraits(userId: number): Promise<Listing[]> {
     const userWithTraits = await this.usersRepository.userWithTraits(userId);
 
     if (!userWithTraits.traits || !userWithTraits.traits.length) {

@@ -91,7 +91,7 @@ describe('ListingRecommendationsService', () => {
     });
 
     it('calls DAO with listing id if listing is provided', async () => {
-      const mockListingId = mockListingRecommendationAttr.listing.id;
+      const mockListingId = mockListingRecommendationAttr.listingId;
 
       const expectedCreateInput = {
         traits: mockListingRecommendationAttr.traits,

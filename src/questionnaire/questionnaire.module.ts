@@ -16,7 +16,7 @@ import { QuestionnaireController } from './questionnaire.controller';
   exports: [QuestionnaireDao]
 })
 export class QuestionnaireModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AuthMiddleware).forRoutes(QuestionnaireController);
   }
 }

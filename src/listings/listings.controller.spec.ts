@@ -40,7 +40,7 @@ describe('ListingsController', () => {
 
       jest.spyOn(listingsService, 'listings').mockResolvedValueOnce(mockListings);
 
-      const results = await controller.listings({ page: 1, limit: 10 });
+      const results = await controller.listings({ startAfter: 1, limit: 10 });
 
       expect(results.length).toEqual(10);
     });

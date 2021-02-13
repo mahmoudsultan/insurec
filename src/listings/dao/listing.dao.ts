@@ -30,7 +30,7 @@ export class ListingDao {
     return this.listing({ id });
   }
 
-  listing(listingWhereUniqInput: Prisma.ListingWhereUniqueInput) {
+  listing(listingWhereUniqInput: Prisma.ListingWhereUniqueInput): Promise<Listing> {
     return this.prisma.listing.findUnique({ where: listingWhereUniqInput });
   }
 

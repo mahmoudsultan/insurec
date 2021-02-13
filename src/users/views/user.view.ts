@@ -28,7 +28,7 @@ export class UserViewBlueprint {
     return this.renderOne(users) as UserView;
   }
 
-  static renderWithTraits(user: UserWithTraits) {
+  static renderWithTraits(user: UserWithTraits): UserWithTraitsView {
     return {
       ...UserViewBlueprint.renderOne(user),
       traits: user.traits || [],

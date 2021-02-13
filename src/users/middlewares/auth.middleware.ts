@@ -12,7 +12,7 @@ export interface AuthRequest extends Request {
 export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
 
-  async use(req: AuthRequest, res: Response, next: () => any) {
+  async use(req: AuthRequest, res: Response, next: () => any): Promise<void> {
     const token = this.getAuthTokenFromRequest(req);
 
     try {
@@ -25,7 +25,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
   }
 
-  private getAuthTokenFromRequest(req: Request) {
+  private getAuthTokenFromRequest(req: Request): string | null {
     if (req.headers['authorization'] && req.headers['authorization'].split(' ')[0]?.toLowerCase() === 'bearer') {
       return req.headers['authorization'] .split(' ')[1];
     }

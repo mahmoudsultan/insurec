@@ -18,7 +18,7 @@ export class ListingRecommendationsService {
     return this.listingRecommendationDao.listingRecommendationById(id);
   }
 
-  create(listingRecommendationAttr: CreateListingRecommendationDto) {
+  create(listingRecommendationAttr: CreateListingRecommendationDto): Promise<ListingRecommendation> {
     const listingId = listingRecommendationAttr.listingId || listingRecommendationAttr.listing?.id;
 
     if (!listingId) {

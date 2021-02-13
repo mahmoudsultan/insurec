@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 import { PrismaModule } from '@src/prisma/prisma.module';
 import { UsersModule } from '@src/users/users.module';
@@ -7,12 +7,10 @@ import { UsersModule } from '@src/users/users.module';
 import { ListingsService } from './listings.service';
 import { ListingDao } from './dao/listing.dao';
 import { MockListingFactory } from './factories/mock-listing.factory';
-import { CreateListingDto } from './dto/create-listing.dto';
 
 describe('ListingsService', () => {
   let service: ListingsService;
   let listingDao: ListingDao;
-  let configService: ConfigService;
   let mockListingFactory: MockListingFactory;
 
   beforeEach(async () => {
@@ -23,7 +21,6 @@ describe('ListingsService', () => {
 
     service = module.get<ListingsService>(ListingsService);
     listingDao = module.get<ListingDao>(ListingDao);
-    configService = module.get<ConfigService>(ConfigService);
     mockListingFactory = new MockListingFactory();
   });
 
@@ -69,8 +66,8 @@ describe('ListingsService', () => {
 
   describe('.create', () => {
     it('calls listingDao.create with correct params', async () => {
-      const newListingParams = mockListingFactory.attributes() as CreateListingDto;
-      const mockListing = mockListingFactory.getOne(newListingParams);
+      const newListingParams = mockListingFactory.attributes();
+      const mockListing = mockListingFactory.getOne(newListingParams as unknown as Record<string, unknown>);
 
       jest.spyOn(listingDao, 'create').mockResolvedValueOnce(mockListing);
 
@@ -80,8 +77,8 @@ describe('ListingsService', () => {
     });
 
     it('returns created listing', async () => {
-      const newListingParams = mockListingFactory.attributes() as CreateListingDto;
-      const mockListing = mockListingFactory.getOne(newListingParams);
+      const newListingParams = mockListingFactory.attributes();
+      const mockListing = mockListingFactory.getOne(newListingParams as unknown as Record<string, unknown>);
 
       jest.spyOn(listingDao, 'create').mockResolvedValueOnce(mockListing);
 
