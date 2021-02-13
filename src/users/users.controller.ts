@@ -1,8 +1,10 @@
 import { Controller, Post, Body, Get, Req, UnauthorizedException, Param, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { ApiImplicitQuery, ApiOkResponse, ApiBearerAuth, ApiModelProperty, ApiCreatedResponse, ApiUseTags } from '@nestjs/swagger';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { UserViewBlueprint, UserWithTraitsView, UserView } from './views/user.view';
-import { ApiImplicitQuery, ApiOkResponse, ApiBearerAuth, ApiImplicitBody, ApiModelProperty, ApiCreatedResponse, ApiUseTags } from '@nestjs/swagger';
+import { LoginDto } from './dto/login.dto';
 
 class TokenResponse {
   @ApiModelProperty({ description: 'JWT Token', type: String })
@@ -38,10 +40,8 @@ export class UsersController {
 
   
   @Post('/login')
-  @ApiImplicitBody({ name: 'email', type: String, required: true })
-  @ApiImplicitBody({ name: 'password', type: String, required: true })
   @ApiOkResponse({ type: TokenResponse })
-  async login(@Body() { email, password }) {
+  async login(@Body() { email, password }: LoginDto) {
     try {
       const token = await this.usersService.login(email, password);
       return {

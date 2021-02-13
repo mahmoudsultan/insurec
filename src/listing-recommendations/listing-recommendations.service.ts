@@ -27,13 +27,7 @@ export class ListingRecommendationsService {
 
     const listingRecommendationCreateInput = {
       ...omit(listingRecommendationAttr, ['listingId', 'listing']),
-      listing: {
-        connect: {
-          where: { 
-            id: listingId,
-          },
-        },
-      },
+      listingId,
     };
 
     return this.listingRecommendationDao.create(listingRecommendationCreateInput);

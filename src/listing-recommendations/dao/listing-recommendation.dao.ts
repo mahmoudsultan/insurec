@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ListingRecommendation, Prisma } from '@prisma/client';
+import { ListingRecommendation, Prisma, Trait } from '@prisma/client';
 import { PrismaService } from '@src/prisma/prisma.service';
+
+import { omit } from 'lodash';
 
 @Injectable()
 export class ListingRecommendationDao {
@@ -24,7 +26,14 @@ export class ListingRecommendationDao {
   }
 
   create(listingRecommendation: Prisma.ListingRecommendationCreateInput): Promise<ListingRecommendation> {
-    return this.prisma.listingRecommendation.create({ data: listingRecommendation });
+    return this.prisma.listingRecommendation.create({
+      data: {
+        ...omit(listingRecommendation, 'traits'),
+        traits: {
+          set: listingRecommendation.traits as Trait[],
+        },
+      },
+    });
   }
 
   delete(id: number): Promise<ListingRecommendation> {
