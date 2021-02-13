@@ -12,6 +12,7 @@ async function bootstrap() {
     .setTitle('Insurec API')
     .setDescription('Insurec PoC API')
     .setVersion('1.0')
+    .setSchemes(process.env.NODE_ENV === 'production' ? 'https' : 'http')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
