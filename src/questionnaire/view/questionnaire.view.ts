@@ -1,11 +1,29 @@
-import { Ques } from '@prisma/client';
+import { Ques, Occupation } from '@prisma/client';
 
 import * as _ from 'lodash';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-export interface QuestionnaireView {
+export class QuestionnaireView {
+  @ApiModelProperty({ example: 1 })
   readonly id: number;
-  readonly name: string;
-  readonly description?: string;
+
+  @ApiModelProperty({ description: 'User First Name' })
+  readonly firstName: string;
+
+  @ApiModelProperty({ description: 'User Email' })
+  readonly email: string;
+
+  @ApiModelProperty({ type: String, description: 'User living address', required: false })
+  readonly address?: string;
+
+  @ApiModelProperty({ type: Number, description: 'Number of children', required: false })
+  readonly children?: number;
+
+  @ApiModelProperty({ type: Occupation, required: false })
+  readonly occupation?: Occupation;
+
+  @ApiModelProperty({ type: Number })
+  readonly userId: number;
 }
 
 export class QuestionnaireViewBlueprint {

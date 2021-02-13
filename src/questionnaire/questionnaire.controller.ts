@@ -4,14 +4,17 @@ import { AuthRequest } from '@src/users/middlewares/auth.middleware';
 
 import { QuestionnaireService } from './questionnaire.service';
 import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
-import { QuestionnaireViewBlueprint } from './view/questionnaire.view';
+import { QuestionnaireViewBlueprint, QuestionnaireView } from './view/questionnaire.view';
+import { ApiCreatedResponse, ApiUseTags } from '@nestjs/swagger';
 
-@Controller('ques')
+@Controller('questionnaire')
+@ApiUseTags('Questionnaire')
 export class QuestionnaireController {
   constructor(private readonly quesService: QuestionnaireService) {}
 
   @Post()
-  async create(@Req() req: AuthRequest, @Body() bodyParams: CreateQuestionnaireDto) {
+  @ApiCreatedResponse({ type: QuestionnaireView })
+  async create(@Req() req: AuthRequest, @Body() bodyParams: CreateQuestionnaireDto): Promise<QuestionnaireView> {
     const user = req.user;
 
     const quesCreateParams = { ...bodyParams, user };
