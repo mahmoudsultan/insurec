@@ -7,11 +7,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ListingsModule } from './listings/listings.module';
 import { ListingRecommendationsModule } from './listing-recommendations/listing-recommendations.module';
 import { UsersModule } from './users/users.module';
-import { QuesModule } from './ques/ques.module';
+import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 
 @Module({
   imports: [PrismaModule, ListingsModule, ConfigModule.forRoot(),
-            ListingRecommendationsModule, UsersModule, QuesModule],
+            ListingRecommendationsModule, UsersModule, QuestionnaireModule],
   controllers: [AppController],
   providers: [AppService],
 })

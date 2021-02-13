@@ -2,7 +2,7 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 import { ConfigModule } from '@nestjs/config';
 
 import { PrismaModule } from '@src/prisma/prisma.module';
-import { QuesModule } from '@src/ques/ques.module';
+import { QuestionnaireModule } from '@src/questionnaire/questionnaire.module';
 
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
@@ -11,7 +11,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 import { UserRepository } from './repository/user.repository';
 
 @Module({
-  imports: [PrismaModule, ConfigModule, QuesModule],
+  imports: [PrismaModule, ConfigModule, QuestionnaireModule],
   providers: [UsersService, UserDao, AuthMiddleware, UserRepository],
   controllers: [UsersController],
   exports: [AuthMiddleware, UserRepository],

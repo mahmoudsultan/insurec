@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Ques } from '@prisma/client';
 
-import { QuesDao } from '@src/ques/dao/ques.dao';
+import { QuestionnaireDao } from '@src/questionnaire/dao/questionnaire.dao';
 
 import { UserDao } from '../dao/user.dao';
 import { UserWithTraits } from '../dto/user-with-traits.dto';
@@ -9,7 +9,7 @@ import { UserWithTraits } from '../dto/user-with-traits.dto';
 @Injectable()
 export class UserRepository {
   constructor(private readonly userDao: UserDao,
-              private readonly quesDao: QuesDao) {}
+              private readonly quesDao: QuestionnaireDao) {}
 
   async userWithTraits(userId: number): Promise<UserWithTraits> {
     const user = await this.userDao.userById(userId);

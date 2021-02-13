@@ -2,19 +2,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { PrismaModule } from '@src/prisma/prisma.module';
 
-import { QuesService } from './ques.service';
-import { QuesDao } from './dao/ques.dao';
+import { QuestionnaireService } from './questionnaire.service';
+import { QuestionnaireDao } from './dao/questionnaire.dao';
 
 describe('QuesService', () => {
-  let service: QuesService;
+  let service: QuestionnaireService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PrismaModule],
-      providers: [QuesService, QuesDao],
+      providers: [QuestionnaireService, QuestionnaireDao],
     }).compile();
 
-    service = module.get<QuesService>(QuesService);
+    service = module.get<QuestionnaireService>(QuestionnaireService);
   });
 
   it('should be defined', () => {

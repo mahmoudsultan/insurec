@@ -4,14 +4,14 @@ import { Ques } from '@prisma/client';
 
 import { omit } from 'lodash';
 
-import { CreateQuestDto } from './dto/create-ques.dto';
-import { QuesDao } from './dao/ques.dao';
+import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
+import { QuestionnaireDao } from './dao/questionnaire.dao';
 
 @Injectable()
-export class QuesService {
-  constructor(private readonly quesDao: QuesDao) {}
+export class QuestionnaireService {
+  constructor(private readonly quesDao: QuestionnaireDao) {}
 
-  create(ques: CreateQuestDto): Promise<Ques> {
+  create(ques: CreateQuestionnaireDto): Promise<Ques> {
     const userId = ques.userId || ques.user?.id;
 
     if (!userId) {

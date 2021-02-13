@@ -4,7 +4,7 @@ import { Ques, Prisma } from '@prisma/client';
 import { PrismaService } from '@src/prisma/prisma.service';
 
 @Injectable()
-export class QuesDao {
+export class QuestionnaireDao {
   constructor(private readonly prisma: PrismaService) {}
 
   latestForUser(userId: number): Promise<Ques> {
