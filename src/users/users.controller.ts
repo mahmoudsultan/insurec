@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Get, Req, UnauthorizedException, Param, BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import { ApiImplicitQuery, ApiOkResponse, ApiBearerAuth, ApiModelProperty, ApiCreatedResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiImplicitQuery, ApiOkResponse, ApiBearerAuth, ApiModelProperty, ApiCreatedResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -22,7 +22,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/:id/traits')
-  @ApiImplicitQuery({ name: 'id', description: 'ID of user to return list of traits for' })
+  @ApiImplicitParam({ name: 'id', description: 'ID of user to return list of traits for' })
   @ApiOkResponse({ type: UserWithTraitsView })
   async userWithTrais(@Param('id') userId) {
     userId = Number.parseInt(userId);
