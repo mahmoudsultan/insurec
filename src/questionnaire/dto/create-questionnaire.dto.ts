@@ -24,7 +24,7 @@ export class CreateQuestionnaireDto {
 
   @IsOptional()
   @IsEnum(Occupation)
-  @ApiModelProperty({ type: Occupation, required: false })
+  @ApiModelProperty({ type: Occupation, required: false, example: 'EMPLOYED' })
   occupation?: Occupation;
 
   @IsNumber()
