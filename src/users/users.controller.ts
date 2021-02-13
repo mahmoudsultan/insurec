@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Req, UnauthorizedException, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Req, UnauthorizedException, Param, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { UserViewBlueprint, UserWithTraitsView, UserView } from './views/user.view';
@@ -55,7 +55,17 @@ export class UsersController {
   @Post()
   @ApiCreatedResponse({ type: UserWithToken })
   async signup(@Body() bodyParams: CreateUserDto) {
-    const createdUser = await this.usersService.signUp(bodyParams);
+    let createdUser;
+    try {
+      createdUser = await this.usersService.signUp(bodyParams);
+    } catch (e) {
+      if (e.message.includes('Input:')) {
+        throw new BadRequestException(e.message);
+      }
+
+      console.error(e);
+      throw new InternalServerErrorException('SOMETHING WENT WRONG... PLEASE TRY AGAIN LATER.');
+    }
 
     return { 
       user: UserViewBlueprint.render(createdUser),

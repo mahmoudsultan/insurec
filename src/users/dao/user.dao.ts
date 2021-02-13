@@ -28,8 +28,17 @@ export class UserDao {
     return this.prisma.user.findUnique({ where: userWhereUniqInput });
   }
 
-  create(user: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({ data: user });
+  async create(user: Prisma.UserCreateInput): Promise<User> {
+    try {
+      const createdUser = await this.prisma.user.create({ data: user });
+      return createdUser;
+    } catch (e) {
+      if (e.code === 'P2002') {
+        throw new Error('Input: This email is already used.');
+      }
+
+      throw e;
+    }
   }
 
   update(id: number, user: Prisma.UserUpdateInput): Promise<User> {
