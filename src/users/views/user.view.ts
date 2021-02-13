@@ -1,11 +1,20 @@
-import { User } from '@prisma/client';
+import { User, Trait } from '@prisma/client';
 
 import * as _ from 'lodash';
 import { UserWithTraits } from '../dto/user-with-traits.dto';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-export interface UserView {
+export class UserView {
+  @ApiModelProperty({ description: 'id', type: Number })
   readonly id: number;
+
+  @ApiModelProperty({ description: 'Email', type: String })
   readonly email: string;
+}
+
+export class UserWithTraitsView extends UserView {
+  @ApiModelProperty({ description: 'List of user traits', type: [Trait] })
+  readonly traits: Trait[];
 }
 
 export class UserViewBlueprint {

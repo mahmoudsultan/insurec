@@ -1,4 +1,9 @@
-export interface CreateUserDto {
+import { ApiModelProperty } from '@nestjs/swagger';
+
+export class CreateUserDto {
+  @ApiModelProperty({ type: String, description: 'User Email' })
   email: string;
-  password: string;  
+
+  @ApiModelProperty({ type: String, description: 'User Password' })
+  password: string;
 }
