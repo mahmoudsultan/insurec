@@ -6,14 +6,10 @@ import { PrismaService } from '@src/prisma/prisma.service';
 export class ListingRecommendationDao {
   constructor(private readonly prisma: PrismaService) {}
 
-  listingRecommendations(page?: number, limit?: number): Promise<ListingRecommendation[]> {
-    let config = {}
-    if (page) {
-      if (!limit) {
-        throw new Error('LIMIT MUST BE PROVIDED IF PAGE IS');
-      }
-
-      config = { ...config, take: limit, skip: (page || 1) * limit };
+  listingRecommendations(startAfter?: number, limit?: number): Promise<ListingRecommendation[]> {
+    let config: any = { take: limit, skip: startAfter ? 1 : 0 }
+    if (startAfter) {
+      config = { ...config, cursor: { id: startAfter } };
     }
 
     return this.prisma.listingRecommendation.findMany(config);

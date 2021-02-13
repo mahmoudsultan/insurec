@@ -7,6 +7,6 @@ export const recommendedListingsForTratisQuery = (traits: Trait[]): string => {
     FROM "public"."ListingRecommendation" LR
     INNER JOIN "public"."Listing" L ON LR."listingId" = L.id
     WHERE traits <@ ARRAY['${traits.join("','")}']::"public"."Trait"[] 
-    ORDER BY cardinality(traits) DESC
+    ORDER BY cardinality(traits) DESC;
   `;
 };

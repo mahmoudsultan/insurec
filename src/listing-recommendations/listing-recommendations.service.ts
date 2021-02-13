@@ -10,8 +10,8 @@ import { CreateListingRecommendationDto } from './dto/create-listing-recommendat
 export class ListingRecommendationsService {
   constructor(private readonly listingRecommendationDao: ListingRecommendationDao) {}
 
-  listingRecommendations(page?: number, limit?: number): Promise<ListingRecommendation[]> {
-    return this.listingRecommendationDao.listingRecommendations(page, limit);
+  listingRecommendations(startAfter?: number, limit?: number): Promise<ListingRecommendation[]> {
+    return this.listingRecommendationDao.listingRecommendations(startAfter, limit);
   }
 
   listingRecommendationById(id: number): Promise<ListingRecommendation> {

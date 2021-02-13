@@ -1,12 +1,19 @@
+import { ApiModelProperty } from '@nestjs/swagger';
+
 import { ListingRecommendation } from '@prisma/client';
 
 import * as _ from 'lodash';
 
 import { ListingRecommendationTraits } from '../dto/listing-recommendation-traits.dto';
 
-export interface ListingRecommendationView {
+export class ListingRecommendationView {
+  @ApiModelProperty({ required: true })
   readonly id: number;
+
+  @ApiModelProperty({ description: 'List of traits that this recommendation matches to.', required: true })
   readonly traits: ListingRecommendationTraits[];
+
+  @ApiModelProperty({ description: 'Listing ID', required: true })
   readonly listingId: number;
 }
 
