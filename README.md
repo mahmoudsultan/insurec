@@ -19,7 +19,7 @@
 
 ## Description
 
-RESTful PoC API for Insurance Recommendations (or Listings in general) based on user traits determinded by set of questions.
+POC RESTful API for Insurance Recommendations (or Listings in general) based on user traits determined by a set of inputs such as a questionnaire.
 
 ## ERD and Design
 
@@ -43,9 +43,6 @@ This design can be also extended to allow for features like "Rank Boosts" which 
 It doesn't however handle country/city-specific recommendations out-of-the-box and would probably need to add some filters to the fetch query.
 
 ## Test Scenario
-Live Demo at https://insurec.herokuapp.com/ is seeded with a couple of `Listings` and `ListingRecommedations`.
-
-To easily test API you can use Swagger Client on https://insurec.herokuapp.com/api .
 
 ### 1. Create User
 
@@ -123,9 +120,9 @@ npx prisma studio
 
 ## Notes
 
-- Based on time, I had to skip testing a few components and paths, you'll find that tests are mostly covering happy paths only.
+- This is a POC so I skiped testing a few components and paths, you'll find that tests are mostly covering happy paths only.
 
-- Unlike Spotify API, this API may return a 500 if a case was not handled well. I had to tradeoff some resilience for faster submission.
+- And Unlike Spotify API, this API may return a 500 if a case was not handled well. I had to tradeoff some resilience for faster POC.
 
 - For Fetching Recommendation I've had to use a raw query because as of now Prisma does not support `@>` Psql operator.
 
